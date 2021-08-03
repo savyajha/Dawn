@@ -2,6 +2,7 @@ name: Deploy Theme
 on:
   workflow_run:
     workflows: ["Test"]
+    branches: ["master"]
     types:
       - completed
 
