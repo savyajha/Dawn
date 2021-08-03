@@ -4,7 +4,7 @@
   "node": {
 	  "supportPolicy": ["lts_latest"]
   },
-  "ignoreDeps": ["moment", "moment-timezone"]
+  "ignoreDeps": ["moment", "moment-timezone"],
   "automerge": true,
   "automergeType": "branch",
   "packageRules": [
