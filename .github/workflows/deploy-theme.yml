@@ -1,10 +1,13 @@
 name: Deploy Theme
 on:
-  push:
-    branches:
-      - master
+  workflow_run:
+    workflows: ["Test"]
+    types:
+      - completed
+
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
