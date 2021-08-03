@@ -1,5 +1,5 @@
 {
-  "extends": ["config:base",":maintainLockFilesMonthly",":disableRateLimiting","schedule:daily"],
+  "extends": ["config:base",":disableRateLimiting","schedule:daily"],
   "rebaseWhen": "behind-base-branch",
   "node": {
 	  "supportPolicy": ["lts_latest"]
