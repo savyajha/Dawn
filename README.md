@@ -2,7 +2,9 @@
 
 A highly functional theme that adapts to the reader's preferences. Let them read, search, subscribe, navigate, and more with ease. Completely free and fully responsive, released under the MIT license.
 
-**Demo: https://dawn.ghost.io**
+**Note:** Forked from the original to remove dependency on jquery, remove search, and reduce the number of third party dependencies in the javascript.
+
+**Example: https://hawkradius.com**
 
 &nbsp;
 
@@ -10,35 +12,6 @@ A highly functional theme that adapts to the reader's preferences. Let them read
 
 1. [Download this theme](https://github.com/TryGhost/Dawn/archive/master.zip)
 2. Log into Ghost, and go to the `Design` settings area to upload the zip file
-
-# Search
-
-1. Navigate to the `Integrations` and click on `Add custom integration`. 
-2. Copy the content API key; this will be used to fetch posts from your site.
-3. Insert the generated key in `Code injection > Site Header` field.
-
-```html
-<script>
-    var gh_search_key = 'API_KEY';
-    var gh_search_migration = 'v1';
-</script>
-```
-
-The theme generates an index of posts for highly performant search. The index is updated automatically when posts are added or updated. However, it isn't updated when posts are unpublished or deleted.
-
-To force update the index, increment the search index migration version like `'v2'`.
-
-## Disable Content Search
-
-When your site has lots of posts, including the post content in the index cache ends up with exceeding the browser local storage quota. In that case, disabling content search is recommended. Also make sure increase the migration version to force update the old index.
-
-```html
-<script>
-    var gh_search_key = 'API_KEY';
-    var gh_search_migration = 'v2'; // Increased from v1
-    var gh_search_content = false; // Disables content search
-</script>
-```
 
 # White Logo
 
