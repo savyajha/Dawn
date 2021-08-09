@@ -1,16 +1,17 @@
 {
   "extends": [
 	  "config:base",
-	  ":disableRateLimiting",
-	  "schedule:daily"
+	  ":disableRateLimiting"
+  ],
+  "enabledManagers": [
+	  "npm"
   ],
   "rebaseWhen": "behind-base-branch",
   "node": {
-	  "supportPolicy": ["lts_latest"]
+	  "supportPolicy": ["lts"]
   },
   "ignoreDeps": ["moment", "moment-timezone"],
   "automerge": true,
-  "automergeType": "branch",
   "packageRules": [
 	  {
 		  "matchPackageNames": ["beeper"],
