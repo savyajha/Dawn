@@ -27,12 +27,17 @@
         {{/if}}
         {{#if feature_image}}
             {{#unless no_image}}
-				<div class="single-media kg-width-{{width}}">
-					<img srcset="{{> srcset}}"
-                        src="{{img_url feature_image size="l"}}"
-						alt="{{title}}"
-						sizes="(min-width: 1023px) 920px, calc(90vw)">
-                </div>
+				<figure class="single-media kg-width-{{width}}">
+					<div class="horizontal">
+						<img srcset="{{> srcset}}"
+							src="{{img_url feature_image size="l"}}"
+							alt="{{title}}"
+							sizes="(min-width: 1023px) 920px, calc(90vw)">
+					</div>
+					{{#if feature_image_caption}}
+						<figcaption>{{feature_image_caption}}</figcaption>
+					{{/if}}
+				</figure>
             {{/unless}}
         {{/if}}
     </header>
@@ -61,11 +66,10 @@
                             {{#foreach authors}}
                                 <div class="author-image-placeholder u-placeholder square">
                                     <a href="{{url}}" title="{{name}}">
-                                        <img class="author-image lazyload u-object-fit"
-                                            data-srcset="{{img_url profile_image size="xs"}}"
+                                        <img class="author-image u-object-fit"
                                             src="{{img_url profile_image size="xs"}}"
-                                            srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                            alt="{{name}}">
+											alt="{{name}}"
+											loading="lazy">
                                     </a>
                                 </div>
                             {{/foreach}}
