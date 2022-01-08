@@ -1,8 +1,10 @@
 {{#get "posts" filter="featured:true" limit="all" as |featured|}}
     {{#if featured}}
         <section class="featured-wrapper container">
-            <div class="featured-header">
-				<h2 class="featured-title">Featured articles</h2>
+			<div class="featured-header">
+				{{#if @custom.featured_title}}
+					<h2 class="featured-title">{{@custom.featured_title}}</h2>
+				{{/if}}
 				<div class="feat-nav">
 					<button type="button" id="scroll-prev" role="presentation" aria-label="Previous Featured Article"><svg class="icon"><use href="#chevron-left"></use></svg></button>
 					<button type="button" id="scroll-next" role="presentation" aria-label="Next Featured Article"><svg class="icon" ><use href="#chevron-right"></use></svg></button>
@@ -11,7 +13,7 @@
             <div class="featured-feed" id="feat-feed">
                 {{#foreach featured visibility="all"}}
                     <article class="{{post_class}} featured-item">
-                        <a href={{url}} aria-label="{{title}}">
+                        <a class="u-permalink" href={{url}} aria-label="{{title}}">
                         {{#if feature_image}}
                             <div class="u-placeholder horizontal">
 								<img class="u-object-fit"
