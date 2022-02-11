@@ -1,7 +1,7 @@
 {
     "name": "dawn-mod",
     "description": "A Ghost theme",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "engines": {
         "ghost": ">=4.0.0",
         "ghost-api": "v4"
@@ -50,6 +50,18 @@
                 "type": "select",
                 "options": ["Modern sans-serif", "Elegant serif"],
                 "default": "Modern sans-serif"
+            },
+			"color_scheme": {
+                "type": "select",
+                "options": [
+                    "Auto",
+                    "Light",
+                    "Dark"
+                ],
+                "default": "Auto"
+            },
+			"white_logo_for_dark_mode": {
+                "type": "image"
             },
             "show_featured_posts": {
                 "type": "boolean",

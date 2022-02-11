@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     gallery();
     table();
     burger();
-    theme();
 });
 
 function featurednavigation() {
@@ -32,87 +31,52 @@ function featurednavigation() {
 
 function subMenu() {
     'use strict';
+    var nav = document.querySelector('.main-nav');
+    var items = nav.querySelectorAll('.menu-item');
 
-	function getNextSiblings(elem) {
-        let sibs = [];
-        let nextElem = elem.parentNode.firstChild;
-        do {
-            if (nextElem.nodeType === 3) continue; // ignore text nodes
-            if (nextElem === elem) continue; // ignore elem of target
-            if (nextElem === elem.nextElementSibling) {
-                sibs.push(nextElem);
-                elem = nextElem;
-            }
-        } while(nextElem = nextElem.nextSibling)
-        return sibs;
+    function getSiblings(el, filter) {
+        var siblings = [];
+        while (el= el.nextSibling) { if (!filter || filter(el)) siblings.push(el); }
+        return siblings;
     }
 
-	// Wrap wrapper around nodes
-	// Just pass a collection of nodes, and a wrapper element
-	function wrapme(nodes, wrapper) {
-		// Cache the current parent and previous sibling of the first node.
-		let parent = nodes[0].parentNode;
-		let previousSibling = nodes[0].previousSibling;
+    function exampleFilter(el) {
+        return el.nodeName.toLowerCase() == 'a';
+    }
 
-		// Place each node in wrapper.
-		//  - If nodes is an array, we must increment the index we grab from 
-		//    after each loop.
-		//  - If nodes is a NodeList, each node is automatically removed from 
-		//    the NodeList when it is removed from its parent with appendChild.
-		for (var i = 0; nodes.length - i; wrapper.firstChild === nodes[0] && i++) {
-			wrapper.appendChild(nodes[i]);
-		}
+    if (items.length > 5) {
+        var separator = items[4];
 
-		// Place the wrapper just after the cached previousSibling,
-		// or if that is null, just before the first child.
-		let nextSibling = previousSibling ? previousSibling.nextSibling : parent.firstChild;
-		parent.insertBefore(wrapper, nextSibling);
+        var toggle = document.createElement('button');
+        toggle.setAttribute('class', 'button-icon menu-item-button menu-item-more');
+        toggle.setAttribute('aria-label', 'More');
+        toggle.innerHTML = '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M21.333 16c0-1.473 1.194-2.667 2.667-2.667v0c1.473 0 2.667 1.194 2.667 2.667v0c0 1.473-1.194 2.667-2.667 2.667v0c-1.473 0-2.667-1.194-2.667-2.667v0zM13.333 16c0-1.473 1.194-2.667 2.667-2.667v0c1.473 0 2.667 1.194 2.667 2.667v0c0 1.473-1.194 2.667-2.667 2.667v0c-1.473 0-2.667-1.194-2.667-2.667v0zM5.333 16c0-1.473 1.194-2.667 2.667-2.667v0c1.473 0 2.667 1.194 2.667 2.667v0c0 1.473-1.194 2.667-2.667 2.667v0c-1.473 0-2.667-1.194-2.667-2.667v0z"></path></svg>';
 
-		return wrapper;
-	}
+        var wrapper = document.createElement('div');
+        wrapper.setAttribute('class', 'sub-menu');
 
-    let mainNav = document.querySelector('.main-nav');
-    let separator = document.querySelector('.menu-item[href*="..."]');
+        var children = getSiblings(separator, exampleFilter);
 
-    if (separator) {
-		let nextsibs = getNextSiblings(separator);
-		let div = document.createElement('div');
-		div.classList.add('sub-menu');
+        children.forEach(function (child) {
+            wrapper.appendChild(child);
+        });
 
-		wrapme(nextsibs, div);
-
-		let repuse = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		let repsvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-		let repbut = document.createElement("button");
-
-		repuse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#dots-horizontal');
-		repsvg.classList.add('icon');
-		repbut.classList.add('button-icon', 'menu-item-button', 'menu-item-more');
-		repbut.setAttribute('aria-label', 'More');
-
-        separator.replaceWith(repbut);
-		repbut.append(repsvg);
-		repsvg.append(repuse);
-
-        let toggle = document.querySelector('.menu-item-more');
-        let subMenu = document.querySelector('.sub-menu');
-        toggle.append(subMenu);
+        toggle.appendChild(wrapper);
+        separator.parentNode.appendChild(toggle);
 
         toggle.addEventListener('click', function () {
-            if (subMenu.offsetWidth === 0 && subMenu.offsetHeight === 0) {
-				subMenu.style.display = 'inline';
-                subMenu.classList.add('animate__animated', 'animate__bounceIn');
+            if (window.getComputedStyle(wrapper).display == 'none') {
+                wrapper.style.display = 'block';
+                wrapper.classList.add('animate__animated', 'animate__bounceIn');
             } else {
-                subMenu.classList.add('animate__animated', 'animate__zoomOut');
+                wrapper.classList.add('animate__animated', 'animate__zoomOut');
             }
         });
 
-        subMenu.addEventListener('animationend', function (e) {
-            subMenu.classList.remove(
-                'animate__animated', 'animate__bounceIn', 'animate__zoomOut'
-            );
+        wrapper.addEventListener('animationend', function (e) {
+            wrapper.classList.remove('animate__animated', 'animate__bounceIn', 'animate__zoomOut');
             if (e.animationName == 'zoomOut') {
-                subMenu.style.display = 'none';
+                wrapper.style.display = 'none';
             }
         });
     }
@@ -189,56 +153,6 @@ function burger() {
     'use strict';
     document.querySelector('.burger').addEventListener('click', function () {
         body.classList.toggle('menu-opened');
-    });
-}
-
-function theme() {
-    'use strict';
-    let toggle = document.querySelector('.js-theme');
-    let toggleText = toggle.querySelector('.theme-text');
-
-    function system() {
-        document.documentElement.classList.remove('theme-dark', 'theme-light');
-        localStorage.removeItem('dawn_theme');
-        toggleText.textContent = toggle.getAttribute('data-system');
-    }
-
-    function dark() {
-        document.documentElement.classList.remove('theme-light');
-		document.documentElement.classList.add('theme-dark');
-        localStorage.setItem('dawn_theme', 'dark');
-        toggleText.textContent = toggle.getAttribute('data-dark');
-    }
-
-    function light() {
-        document.documentElement.classList.remove('theme-dark');
-		document.documentElement.classList.add('theme-light');
-        localStorage.setItem('dawn_theme', 'light');
-        toggleText.textContent = toggle.getAttribute('data-light');
-    }
-
-    switch (localStorage.getItem('dawn_theme')) {
-        case 'dark':
-            dark();
-            break;
-        case 'light':
-            light();
-            break;
-        default:
-            system();
-            break;
-    }
-
-    toggle.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        if (!document.documentElement.classList.contains('theme-dark') && !document.documentElement.classList.contains('theme-light')) {
-            dark();
-        } else if (document.documentElement.classList.contains('theme-dark')) {
-            light();
-        } else {
-            system();
-        }
     });
 }
 

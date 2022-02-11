@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{@site.locale}}">
+<html{{#match @custom.color_scheme "Dark"}} class="theme-dark"{{/match}}{{#match @custom.color_scheme "Light"}} class="theme-light"{{/match}} lang="{{@site.locale}}">
 
 <head>
     <meta charset="utf-8">
@@ -42,20 +42,6 @@
 
     <script>
         var siteUrl = '{{@site.url}}';
-    </script>
-
-    <script>
-        var localTheme = localStorage.getItem('dawn_theme');
-        switch (localTheme) {
-            case 'dark':
-                document.documentElement.classList.add('theme-dark');
-                break;
-            case 'light':
-                document.documentElement.classList.add('theme-light');
-                break;
-            default:
-                break;
-        }
     </script>
 
     {{ghost_head}}
