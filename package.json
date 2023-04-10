@@ -112,7 +112,7 @@
         "postcss-easy-import": "4.0.0",
         "pump": "3.0.0",
         "stylelint": "15.4.0",
-        "stylelint-config-standard": "31.0.0",
+        "stylelint-config-standard": "32.0.0",
         "stylelint-order": "6.0.3"
     },
     "browserslist": [
